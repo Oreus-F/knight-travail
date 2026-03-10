@@ -12,13 +12,13 @@
   },
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "dependencies": {
     "ansi-escapes": "^4.3.2",
@@ -203,6 +203,7 @@
     "yocto-queue": "^0.1.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.29.0",
     "jest": "^30.3.0"
   }
 }
