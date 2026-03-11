@@ -1,4 +1,4 @@
-export class Node{
+class Node{
     constructor(x, y){
         this.x = x,
         this.y = y,
@@ -51,7 +51,7 @@ export class Node{
 
 export class Graph{
     constructor(root, target){
-        this.root = root,
+        this.root = new Node(root),
         this.target = target,
         this.visited = {},
         this.paths = {
@@ -61,8 +61,12 @@ export class Graph{
     }
 
     findPath(queue = [this.root]){
+
         while(queue.length > 0){
             const current = queue[0];
+
+
+            if(current = this.root){current.caculateAllNextPost()}
             
 
             if(current.getX() === this.target[0] && current.getY() === this.target[1]){
@@ -99,9 +103,6 @@ export class Graph{
             queue.shift()
         }
 
-
-        return this.paths['paths']
-
     }
 
 
@@ -115,6 +116,15 @@ export class Graph{
         path.push(node.getPositions());
 
         return path
+    }
+
+
+    getShortestPath(){
+        this.findPath();
+        console.log(`You made it in ${this.paths["length"]} moves! Here's your path:`);
+        for(let x = 0; x < this.paths['paths'].length; x++){
+            console.log(this.paths['paths'][x])
+        }
     }
 
 }
