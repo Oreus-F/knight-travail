@@ -2,6 +2,7 @@ class Node{
     constructor(x, y){
         this.x = x,
         this.y = y,
+        this.positions = [this.x, this.y]
         this.nextPos = [],
         this.parent = []
     }
@@ -15,6 +16,12 @@ class Node{
         return this.y
     };
 
+
+    getPositions(){
+        return this.positions;
+    }
+
+    
     caculateAllNextPost(){
         for(let a = 1; a < 3; a++){
             if(a === 1){
@@ -51,7 +58,7 @@ class Node{
 
 export class Graph{
     constructor(root, target){
-        this.root = new Node(root),
+        this.root = new Node(root[0], root[1]),
         this.target = target,
         this.visited = {},
         this.paths = {
@@ -66,7 +73,7 @@ export class Graph{
             const current = queue[0];
 
 
-            if(current = this.root){current.caculateAllNextPost()}
+            if(current === this.root){current.caculateAllNextPost()}
             
 
             if(current.getX() === this.target[0] && current.getY() === this.target[1]){
