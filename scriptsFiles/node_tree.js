@@ -2,7 +2,6 @@ export class Node{
     constructor(x, y){
         this.x = x,
         this.y = y,
-        this.positions = [this.x, this.y],
         this.nextPos = [],
         this.parent = []
     }
@@ -15,11 +14,6 @@ export class Node{
     getY(){
         return this.y
     };
-
-
-    getPositions(){
-        return this.positions
-    }
 
     caculateAllNextPost(){
         for(let a = 1; a < 3; a++){
@@ -66,62 +60,61 @@ export class Graph{
         }
     }
 
-    // checkPositions(node){
-    //     console.log(node)
-    // }
-
     findPath(queue = [this.root]){
         while(queue.length > 0){
             const current = queue[0];
+            
 
-            if(current.getPositions() === this.target){
-                const path = this.getPath(current)
-            }
+            if(current.getX() === this.target[0] && current.getY() === this.target[1]){
+                const path = this.getPath(current);
+                this.paths['length'] = path.length - 1;
+                this.paths['paths'] = path;
+                break
 
-            const nextPositions = current.nextPos;
-
-            for(let x = 0; x < nextPositions.length; x++){
-                const positionskey = `${nextPositions[x][0]}${nextPositions[x][1]}`;
+            } else {
                 
-                if(!this.visited[positionskey]){
-                    const newN = new Node(nextPositions[x][0], nextPositions[x][1]);
-                    newN.parent.push(current)
-                    this.visited[positionskey] = newN;
-
-                    queue.push(newN)
-
-                } else {
-                    console.log('nope')
+                const nextPositions = current.nextPos;
+    
+                for(let x = 0; x < nextPositions.length; x++){
+                    const positionskey = `${nextPositions[x][0]}${nextPositions[x][1]}`;
+                    
+                    if(!this.visited[positionskey]){
+                        const newN = new Node(nextPositions[x][0], nextPositions[x][1]);
+                        newN.parent.push(current);
+                        newN.caculateAllNextPost();
+                        this.visited[positionskey] = newN;
+    
+                        queue.push(newN)
+    
+                    } else {
+                        
+                        const newP = this.visited[positionskey];
+                        newP.parent.push(current);
+                    }
                 }
+
             }
+
 
             queue.shift()
         }
 
-        console.log(this.visited)
+
+        return this.paths['paths']
+
     }
 
 
-    getPath(node){
+    getPath(node, path = []){
+
         if(node.parent.length === 0){
-            return node.getPositions();
+            return path.push(node.getPositions());
         }
 
-        let path = [this.getPath(node.parent[0])]
-        return path.push(node.getPositions())
+        this.getPath(node.parent[0], path)
+        path.push(node.getPositions());
 
-    }   
+        return path
+    }
 
 }
-
-
-function knightMoves(cD, cA){
-    
-}
-
-
-const firstPosition = new Node(0,0);
-firstPosition.caculateAllNextPost();
-console.log(firstPosition.nextPos);
-const board = new Graph(firstPosition);
-board.findPath()
