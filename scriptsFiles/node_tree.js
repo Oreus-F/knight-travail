@@ -2,7 +2,8 @@ export class Node{
     constructor(x, y){
         this.x = x,
         this.y = y,
-        this.nextPos = []
+        this.nextPos = [],
+        this.parent = []
     }
 
 
