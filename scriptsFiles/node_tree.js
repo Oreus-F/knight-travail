@@ -69,8 +69,9 @@ export class Graph{
 
     findPath(queue = [this.root]){
 
+        let HEAD = 0;
         while(queue.length > 0){
-            const current = queue[0];
+            const current = queue[HEAD];
 
 
             if(current.getX() === this.target[0] && current.getY() === this.target[1]){
@@ -104,7 +105,7 @@ export class Graph{
             }
 
 
-            queue.shift()
+            HEAD++
         }
 
     }
