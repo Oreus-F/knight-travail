@@ -73,9 +73,6 @@ export class Graph{
             const current = queue[0];
 
 
-            if(current === this.root){current.caculateAllNextPost()}
-            
-
             if(current.getX() === this.target[0] && current.getY() === this.target[1]){
                 const path = this.getPath(current);
                 this.paths['length'] = path.length - 1;
@@ -83,6 +80,8 @@ export class Graph{
                 break
 
             } else {
+
+                current.caculateAllNextPost();
                 
                 const nextPositions = current.nextPos;
     
@@ -92,13 +91,11 @@ export class Graph{
                     if(!this.visited[positionskey]){
                         const newN = new Node(nextPositions[x][0], nextPositions[x][1]);
                         newN.parent.push(current);
-                        newN.caculateAllNextPost();
                         this.visited[positionskey] = newN;
     
                         queue.push(newN)
     
                     } else {
-                        
                         const newP = this.visited[positionskey];
                         newP.parent.push(current);
                     }
